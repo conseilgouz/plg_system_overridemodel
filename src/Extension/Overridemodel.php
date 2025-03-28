@@ -8,7 +8,7 @@
  * from https://joomla.stackexchange.com/questions/31922/change-the-default-articles-list-ordering-overriding-the-model/32099#32099
  **/
 /*                 -------------- Override User Model ---------------------------          */
-/*     create a model called MyModel in administrator/components/com_user/src/Model        */
+/*     create a model called CguserModel in administrator/components/com_user/src/Model    */
 /*                          this plugin extends UserModel.php                              */
 /*                 ---------------------------------------------------------------         */
 namespace Conseilgouz\Plugin\System\OverrideModel\Extension;

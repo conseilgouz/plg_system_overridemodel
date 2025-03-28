@@ -4,8 +4,8 @@
  * @package     Joomla.Administrator
  * @subpackage  com_users
  *
- * @copyright   (C) 2008 Open Source Matters, Inc. <https://www.joomla.org>
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   (C) 2025 Conseilgouz
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
  *
  * En création d'utilisateur, ajout d'un mot de passe de la longueur définie dans la config.
  *
@@ -14,6 +14,8 @@
 namespace Joomla\Component\Users\Administrator\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Component\Users\Administrator\Model\UserModel;
 use Joomla\CMS\User\UserHelper;
 
@@ -22,7 +24,29 @@ use Joomla\CMS\User\UserHelper;
 class CguserModel extends UserModel
 {
     /**
+         * Constructor.
+         *
+         * @param   array                 $config   An optional associative array of configuration settings.
+         * @param   ?MVCFactoryInterface  $factory  The factory.
+         *
+         * Note : en cas de modification d'un utilisateur, user.id doit être initialisée.
+         *
+         */
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null)
+    {
+        $input = Factory::getApplication()->getInput();
+        $id = $input->getInt('id');
+        if ($id) {// edit one user
+            $this->setState('user.id', $id);
+        }
+        parent::__construct($config, $factory);
+    }
+    /**
     * Method to save the form data.
+    *
+    * En création d'un utilisateur, si le mot de passe n'a pas été saisi, un mot de
+    * passe de la longueur mini. définie dans la configuration est créé car, en standard,
+    * le mot de passe créé fait 32 caractères.
     *
     * @param   array  $data  The form data.
     *
@@ -45,28 +69,4 @@ class CguserModel extends UserModel
         }
         return parent::save($data);
     }
-    /**
-     * Strange behaviour : return an object when expecting Array
-     *
-     * @param   integer  $userId  The user ID to retrieve the groups for
-     *
-     * @return  array  An array of assigned groups
-     */
-    public function getAssignedGroups($userId = null)
-    {
-        $groupsIDs = parent::getAssignedGroups($userId);
-        if (!empty($groupsIDs)) {
-            $ret = [];
-            if (is_object($groupsIDs)) {
-                foreach ($groupsIDs as $key => $item) {
-                    if (is_int($item)) {
-                        $ret[$key] = $item;
-                    }
-                }
-                $groupsIDs = $ret;
-            }
-        }
-        return $groupsIDs;
-    }
-
 }

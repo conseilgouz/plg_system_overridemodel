@@ -3,6 +3,18 @@
 		<element>plg_system_overridemodel</element>
 		<type>plugin</type>
 		<group>system</group>
+		<version>1.0.1</version>
+        <note>
+            <item>Update : 28/03/2025</item>
+        </note>
+        <fix>
+            <item>Simplification de CguserModel, ajout de commentaires</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>plg_system_overridemodel</element>
+		<type>plugin</type>
+		<group>system</group>
 		<version>1.0.0</version>
         <note>
             <item>Update : 27/03/2025</item>
